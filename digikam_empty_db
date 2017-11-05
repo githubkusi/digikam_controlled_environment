@@ -1,5 +1,0 @@
-mysql -uroot -p$DBPASS < new_db.sql
-mysql -udkuser -pdkpasswd digikam_devel_core < empty_core_db.sql
-
-export XDG_CONFIG_HOME=$PWD/config
-digikam

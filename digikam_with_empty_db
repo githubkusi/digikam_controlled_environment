@@ -1,0 +1,13 @@
+#!/bin/bash
+mysql -uroot -p$DBPASS < sql/dk_all_empty.sql
+
+PICS=/tmp/digikam-debug-pics
+[ -e $PICS ] && rm -r $PICS
+mkdir $PICS
+cp pics/* $PICS
+
+mkdir -p config
+cp template/digikamrc config
+
+export XDG_CONFIG_HOME=$PWD/config
+digikam

@@ -78,7 +78,7 @@ TreeView Font=Noto Sans,10,-1,0,50,0,0,0,0,0
 
 [AlbumFolderView Sidebar]
 CurrentIndex=1
-Expansion=0,1
+Expansion=0,1,-2
 RestoreChecked=false
 Selection=1
 SortColumn=0
@@ -137,7 +137,7 @@ RenderingIntent=0
 WorkProfileFile[$e]=/usr/share/digikam/profiles/srgb-d65.icm
 
 [CoreDB Settings]
-Recently Used Tags=9
+Recently Used Tags=24,25,11,9
 
 [DMetadata Settings][readCommentNamespaces][Exif.Image.ImageDescription]
 alternativeName=Exif.Photo.UserComment
@@ -708,7 +708,7 @@ SortColumn=0
 SortOrder=0
 
 [Digikam Left Sidebar]
-ActiveTab=0
+ActiveTab=1
 Minimized=false
 RestoreSize=-1
 
@@ -728,7 +728,7 @@ ImageDescEdit Tab=1
 ImageDescEditTab CaptionsLang=x-default
 ImageDescEditTab SearchBarCaseSensitive=0
 ImageDescEditTab TagCheckViewCurrentIndex=
-ImageDescEditTab TagCheckViewExpansion=0
+ImageDescEditTab TagCheckViewExpansion=0,23
 ImageDescEditTab TagCheckViewRestoreChecked=false
 ImageDescEditTab TagCheckViewSelection=
 ImageDescEditTab TagCheckViewSortColumn=0
@@ -909,7 +909,7 @@ CaseSensitive=0
 
 [General Settings]
 Application Style=breeze
-Apply Sidebar Changes Directly=false
+Apply Sidebar Changes Directly=true
 Clean core DB At Start=false
 FullScreen Hide SideBars=false
 FullScreen Hide ThumbBar=true
@@ -1330,8 +1330,8 @@ Version Properties Tab=versions
 Version Properties View Mode=2
 
 [MainWindow]
-InitialAlbumID=1
-SplitterState=AAAA/wAAAAEAAAADAAABHAAAAeMAAAFtAf////8AAAAAAQE=
+InitialAlbumID=268435477
+SplitterState=AAAA/wAAAAEAAAADAAABEAAAAlAAAAG/Af////8AAAAAAQE=
 ThumbbarState=AAAA/wAAAAD9AAAAAQAAAAIAAAP2AAAAxPwBAAAAAfsAAAAmAG0AYQBpAG4AdwBpAG4AZABvAHcAXwB0AGgAdQBtAGIAYgBhAHIAAAAAAAAAA/YAAABcAQAAAwAAAZEAAANwAAAABAAAAAQAAAAIAAAACPwAAAAA
 
 [Metadata Settings]
@@ -1383,7 +1383,7 @@ SortOrder=0
 CaseSensitive=0
 
 [Setup Dialog]
-Setup Page=0
+Setup Page=1
 Template Tab=0
 Window-Maximized 1050x1680=true
 
@@ -1411,10 +1411,10 @@ TypeGeolocationFilter Expanded=true
 TypeMimeFilter Expanded=true
 
 [TagView Sidebar]
-CurrentIndex=
-Expansion=0
+CurrentIndex=21
+Expansion=0,25,23,24,21
 RestoreChecked=false
-Selection=
+Selection=21
 SortColumn=0
 SortOrder=0
 TagsSource=false

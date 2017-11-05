@@ -40,7 +40,7 @@ CREATE TABLE `AlbumRoots` (
 
 LOCK TABLES `AlbumRoots` WRITE;
 /*!40000 ALTER TABLE `AlbumRoots` DISABLE KEYS */;
-INSERT INTO `AlbumRoots` VALUES (1,'pics',0,1,'volumeid:?uuid=a2eb43b6-9a15-4906-b2e7-884579e441bf','/kusi/develop/digikam/digikam_fresh_db/pics');
+INSERT INTO `AlbumRoots` VALUES (1,'digikam-debug-pics',0,3,'networkshareid:?mountpath=/tmp/digikam-debug-pics','/');
 /*!40000 ALTER TABLE `AlbumRoots` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +73,7 @@ CREATE TABLE `Albums` (
 
 LOCK TABLES `Albums` WRITE;
 /*!40000 ALTER TABLE `Albums` DISABLE KEYS */;
-INSERT INTO `Albums` VALUES (1,1,'/','2017-10-23',NULL,NULL,NULL);
+INSERT INTO `Albums` VALUES (1,1,'/','2017-11-05',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `Albums` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +246,7 @@ CREATE TABLE `ImageInformation` (
 
 LOCK TABLES `ImageInformation` WRITE;
 /*!40000 ALTER TABLE `ImageInformation` DISABLE KEYS */;
-INSERT INTO `ImageInformation` VALUES (1,-1,'2017-10-23 01:54:14',NULL,0,100,100,'PNG',8,1),(2,-1,'2017-10-23 01:55:17',NULL,0,170,170,'JPG',8,5),(3,-1,'2017-10-23 01:57:08',NULL,0,484,500,'JPG',8,5);
+INSERT INTO `ImageInformation` VALUES (1,-1,'2017-11-05 11:17:46',NULL,0,100,100,'PNG',8,1),(2,-1,'2017-11-05 11:17:46',NULL,0,170,170,'JPG',8,5),(3,-1,'2017-11-05 11:17:46',NULL,0,484,500,'JPG',8,5);
 /*!40000 ALTER TABLE `ImageInformation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -428,6 +428,7 @@ CREATE TABLE `ImageTags` (
 
 LOCK TABLES `ImageTags` WRITE;
 /*!40000 ALTER TABLE `ImageTags` DISABLE KEYS */;
+INSERT INTO `ImageTags` VALUES (1,7),(1,17),(1,25),(2,7),(2,17),(2,24),(3,7),(3,17),(3,21);
 /*!40000 ALTER TABLE `ImageTags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -462,7 +463,7 @@ CREATE TABLE `Images` (
 
 LOCK TABLES `Images` WRITE;
 /*!40000 ALTER TABLE `Images` DISABLE KEYS */;
-INSERT INTO `Images` VALUES (1,1,'lifeboat-clipart-lifesaver-redwhiteblue-th.png',1,1,'2017-10-23 01:54:14',7041,'39cebcf4a2bfb1c0663dbec7f4a01a93'),(2,1,'lifesaver-clipart-gg65486572.jpg',1,1,'2017-10-23 01:55:17',7235,'03630a65c3afbb2bd370ec159dc088b3'),(3,1,'monkey-cartoon-142.jpg',1,1,'2017-10-23 01:57:08',37738,'be0abc9d34c0e83bee1fd61c118fc148');
+INSERT INTO `Images` VALUES (1,1,'lifeboat-clipart-lifesaver-redwhiteblue-th.png',1,1,'2017-11-05 11:45:48',7041,'39cebcf4a2bfb1c0663dbec7f4a01a93'),(2,1,'lifesaver-clipart-gg65486572.jpg',1,1,'2017-11-05 11:45:48',7235,'03630a65c3afbb2bd370ec159dc088b3'),(3,1,'monkey-cartoon-142.jpg',1,1,'2017-11-05 11:45:48',37738,'be0abc9d34c0e83bee1fd61c118fc148');
 /*!40000 ALTER TABLE `Images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -511,7 +512,7 @@ CREATE TABLE `Settings` (
 
 LOCK TABLES `Settings` WRITE;
 /*!40000 ALTER TABLE `Settings` DISABLE KEYS */;
-INSERT INTO `Settings` VALUES ('preAlpha010Update1','true'),('preAlpha010Update2','true'),('preAlpha010Update3','true'),('beta010Update1','true'),('beta010Update2','true'),('uniqueHashVersion','2'),('databaseImageFormats','jpg;jpeg;jpe;jp2;j2k;jpx;jpc;pgx;tif;tiff;png;gif;xpm;ppm;pnm;pgf;bmp;xcf;pcx;webp;bay;bmq;cr2;crw;cs1;dc2;dcr;dng;erf;fff;hdr;k25;kdc;mdc;mos;mrw;nef;orf;pef;pxn;raf;raw;rdc;sr2;srf;x3f;arw;3fr;cine;ia;kc2;mef;nrw;qtk;rw2;sti;rwl;srw;'),('databaseVideoFormats','mpeg;mpg;mpo;mpe;mts;vob;avi;divx;wmv;wmf;asf;mp4;3gp;mov;3g2;m4v;m2v;mkv;webm;mng'),('databaseAudioFormats','ogg;mp3;wma;wav'),('databaseIgnoreDirectoryFormats','@eaDir'),('FilterSettingsVersion','6'),('DcrawFilterSettingsVersion','4'),('DBVersion','8'),('DBVersionRequired','8'),('databaseUUID','{41dca3f8-c5a6-4f94-9bc0-5168373f1f61}'),('Locale','UTF-8'),('DeleteRemovedCompleteScanCount','2'),('Scanned','2017-10-23T02:04:37');
+INSERT INTO `Settings` VALUES ('preAlpha010Update1','true'),('preAlpha010Update2','true'),('preAlpha010Update3','true'),('beta010Update1','true'),('beta010Update2','true'),('uniqueHashVersion','2'),('databaseImageFormats','jpg;jpeg;jpe;jp2;j2k;jpx;jpc;pgx;tif;tiff;png;gif;xpm;ppm;pnm;pgf;bmp;xcf;pcx;webp;bay;bmq;cr2;crw;cs1;dc2;dcr;dng;erf;fff;hdr;k25;kdc;mdc;mos;mrw;nef;orf;pef;pxn;raf;raw;rdc;sr2;srf;x3f;arw;3fr;cine;ia;kc2;mef;nrw;qtk;rw2;sti;rwl;srw;'),('databaseVideoFormats','mpeg;mpg;mpo;mpe;mts;vob;avi;divx;wmv;wmf;asf;mp4;3gp;mov;3g2;m4v;m2v;mkv;webm;mng'),('databaseAudioFormats','ogg;mp3;wma;wav'),('databaseIgnoreDirectoryFormats','@eaDir'),('FilterSettingsVersion','6'),('DcrawFilterSettingsVersion','4'),('DBVersion','8'),('DBVersionRequired','8'),('databaseUUID','{c9beeeaf-d314-4740-adf6-4c5ca6d8e4a9}'),('Locale','UTF-8'),('DeleteRemovedCompleteScanCount','3'),('Scanned','2017-11-05T11:45:53');
 /*!40000 ALTER TABLE `Settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -537,7 +538,7 @@ CREATE TABLE `TagProperties` (
 
 LOCK TABLES `TagProperties` WRITE;
 /*!40000 ALTER TABLE `TagProperties` DISABLE KEYS */;
-INSERT INTO `TagProperties` VALUES (1,'internalTag',NULL),(2,'internalTag',NULL),(3,'internalTag',NULL),(4,'internalTag',NULL),(5,'internalTag',NULL),(6,'internalTag',NULL);
+INSERT INTO `TagProperties` VALUES (1,'internalTag',NULL),(2,'internalTag',NULL),(3,'internalTag',NULL),(4,'internalTag',NULL),(5,'internalTag',NULL),(6,'internalTag',NULL),(7,'internalTag',NULL),(8,'internalTag',NULL),(9,'internalTag',NULL),(10,'internalTag',NULL),(11,'internalTag',NULL),(12,'internalTag',NULL),(13,'internalTag',NULL),(14,'internalTag',NULL),(15,'internalTag',NULL),(16,'internalTag',NULL),(17,'internalTag',NULL),(18,'internalTag',NULL),(19,'internalTag',NULL),(20,'internalTag',NULL);
 /*!40000 ALTER TABLE `TagProperties` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -560,7 +561,7 @@ CREATE TABLE `Tags` (
   UNIQUE KEY `pid` (`pid`,`name`(100)),
   KEY `Tags_Images` (`icon`),
   CONSTRAINT `Tags_Images` FOREIGN KEY (`icon`) REFERENCES `Images` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -569,7 +570,7 @@ CREATE TABLE `Tags` (
 
 LOCK TABLES `Tags` WRITE;
 /*!40000 ALTER TABLE `Tags` DISABLE KEYS */;
-INSERT INTO `Tags` VALUES (0,-1,'_Digikam_root_tag_',NULL,NULL,1,14),(1,0,'_Digikam_Internal_Tags_',NULL,NULL,2,13),(2,1,'Intermediate Version',NULL,NULL,11,12),(3,1,'Current Version',NULL,NULL,9,10),(4,1,'Version Always Visible',NULL,NULL,7,8),(5,1,'Need Resolving History',NULL,NULL,5,6),(6,1,'Need Tagging History Graph',NULL,NULL,3,4);
+INSERT INTO `Tags` VALUES (0,-1,'_Digikam_root_tag_',NULL,NULL,1,52),(1,0,'_Digikam_Internal_Tags_',NULL,NULL,12,51),(2,1,'Intermediate Version',NULL,NULL,49,50),(3,1,'Current Version',NULL,NULL,47,48),(4,1,'Version Always Visible',NULL,NULL,45,46),(5,1,'Need Resolving History',NULL,NULL,43,44),(6,1,'Need Tagging History Graph',NULL,NULL,41,42),(7,1,'Color Label None',NULL,NULL,39,40),(8,1,'Color Label Red',NULL,NULL,37,38),(9,1,'Color Label Orange',NULL,NULL,35,36),(10,1,'Color Label Yellow',NULL,NULL,33,34),(11,1,'Color Label Green',NULL,NULL,31,32),(12,1,'Color Label Blue',NULL,NULL,29,30),(13,1,'Color Label Magenta',NULL,NULL,27,28),(14,1,'Color Label Gray',NULL,NULL,25,26),(15,1,'Color Label Black',NULL,NULL,23,24),(16,1,'Color Label White',NULL,NULL,21,22),(17,1,'Pick Label None',NULL,NULL,19,20),(18,1,'Pick Label Rejected',NULL,NULL,17,18),(19,1,'Pick Label Pending',NULL,NULL,15,16),(20,1,'Pick Label Accepted',NULL,NULL,13,14),(21,0,'Monkey',NULL,NULL,10,11),(22,0,'People',NULL,NULL,8,9),(23,0,'Lifesaver',NULL,NULL,2,7),(24,23,'red',NULL,NULL,5,6),(25,23,'blue',NULL,NULL,3,4);
 /*!40000 ALTER TABLE `Tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -646,4 +647,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-23  2:06:40
+-- Dump completed on 2017-11-05 11:47:23
