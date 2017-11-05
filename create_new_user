@@ -1,0 +1,2 @@
+#!/bin/bash
+mysql -uroot -p$DBPASS < create_new_user.sql
