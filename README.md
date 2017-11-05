@@ -1,0 +1,1 @@
+# digikam_fresh_db
