@@ -5,15 +5,16 @@ The scripts allow to run Digikam in a debug environment which doesn't tamper wit
 ## Prerequisites
 
 Add 
-´´´
+
     export DBPASS=<rootpasswd for your sql server>
-´´´
+
 to .bashrc and restart bash
 
 Run
-´´´
+
     create_new_user
-´´´
+
+to create a user dkuser with sufficient privileges for digikam
 
 ## Scripts
 
