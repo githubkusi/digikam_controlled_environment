@@ -1,0 +1,15 @@
+#!/bin/bash
+mysql -uroot -p$DBPASS < sql/dk_all_empty.sql
+mysql -udkuser -pdkpasswd digikam_devel_core < sql/dk_core_sample.sql 
+mysql -udkuser -pdkpasswd digikam_devel_core < sql/photosharing.sql
+
+PICS=/tmp/digikam-debug-pics
+[ -e $PICS ] && rm -r $PICS
+mkdir -p $PICS/my-album
+cp pics/* $PICS/my-album
+
+mkdir -p config
+cp template/digikamrc config
+
+export XDG_CONFIG_HOME=$PWD/config
+digikam
