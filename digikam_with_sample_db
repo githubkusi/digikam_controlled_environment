@@ -2,10 +2,10 @@
 mysql -uroot -p$DBPASS < sql/dk_all_empty.sql
 mysql -udkuser -pdkpasswd digikam_devel_core < sql/dk_core_sample.sql
 
-PICS=/tmp/digikam-debug-pics
+PICS=/tmp/digikam-debug-pics/my-album
 [ -e $PICS ] && rm -r $PICS
-mkdir $PICS
-cp pics/* $PICS
+mkdir -p $PICS/my-album
+cp pics/* $PICS/my-album
 
 mkdir -p config
 cp template/digikamrc config

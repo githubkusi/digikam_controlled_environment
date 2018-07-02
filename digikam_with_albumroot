@@ -4,8 +4,8 @@ mysql -udkuser -pdkpasswd digikam_devel_core < sql/dk_core_albumroot.sql
 
 PICS=/tmp/digikam-debug-pics
 [ -e $PICS ] && rm -r $PICS
-mkdir $PICS
-cp pics/* $PICS
+mkdir -p $PICS/my-album
+cp pics/* $PICS/my-album
 
 mkdir -p config
 cp template/digikamrc config
