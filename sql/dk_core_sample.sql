@@ -1,8 +1,8 @@
--- MySQL dump 10.15  Distrib 10.0.31-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.2.15-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: digikam_devel_core
 -- ------------------------------------------------------
--- Server version	10.0.31-MariaDB
+-- Server version	10.2.15-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,14 +24,14 @@ DROP TABLE IF EXISTS `AlbumRoots`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `AlbumRoots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `label` longtext CHARACTER SET utf8 DEFAULT NULL,
   `status` int(11) NOT NULL,
   `type` int(11) NOT NULL,
-  `identifier` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `specificPath` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `identifier` longtext CHARACTER SET utf8 DEFAULT NULL,
+  `specificPath` longtext CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `identifier` (`identifier`(127),`specificPath`(128))
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,17 +54,17 @@ DROP TABLE IF EXISTS `Albums`;
 CREATE TABLE `Albums` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `albumRoot` int(11) NOT NULL,
-  `relativePath` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `relativePath` longtext CHARACTER SET utf8 NOT NULL,
   `date` date DEFAULT NULL,
-  `caption` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `collection` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `caption` longtext CHARACTER SET utf8 DEFAULT NULL,
+  `collection` longtext CHARACTER SET utf8 DEFAULT NULL,
   `icon` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `albumRoot` (`albumRoot`,`relativePath`(255)),
   KEY `Albums_Images` (`icon`),
   CONSTRAINT `Albums_AlbumRoots` FOREIGN KEY (`albumRoot`) REFERENCES `AlbumRoots` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Albums_Images` FOREIGN KEY (`icon`) REFERENCES `Images` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `Albums` (
 
 LOCK TABLES `Albums` WRITE;
 /*!40000 ALTER TABLE `Albums` DISABLE KEYS */;
-INSERT INTO `Albums` VALUES (1,1,'/','2017-11-05',NULL,NULL,NULL);
+INSERT INTO `Albums` VALUES (1,1,'/','2018-07-03',NULL,NULL,NULL),(2,1,'/my-album','2018-07-03',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `Albums` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,13 +86,13 @@ DROP TABLE IF EXISTS `DownloadHistory`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `DownloadHistory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `identifier` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `filename` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `identifier` longtext CHARACTER SET utf8 DEFAULT NULL,
+  `filename` longtext CHARACTER SET utf8 DEFAULT NULL,
   `filesize` bigint(20) DEFAULT NULL,
   `filedate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `identifier` (`identifier`(164),`filename`(165),`filesize`,`filedate`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,15 +115,15 @@ CREATE TABLE `ImageComments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `imageid` int(11) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
-  `language` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `author` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `language` varchar(128) CHARACTER SET utf8 DEFAULT NULL,
+  `author` longtext CHARACTER SET utf8 DEFAULT NULL,
   `date` datetime DEFAULT NULL,
-  `comment` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `comment` longtext CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `imageid` (`imageid`,`type`,`language`,`author`(202)),
   KEY `comments_imageid_index` (`imageid`),
   CONSTRAINT `ImageComments_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,14 +145,14 @@ DROP TABLE IF EXISTS `ImageCopyright`;
 CREATE TABLE `ImageCopyright` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `imageid` int(11) DEFAULT NULL,
-  `property` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `value` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `extraValue` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `property` longtext CHARACTER SET utf8 DEFAULT NULL,
+  `value` longtext CHARACTER SET utf8 DEFAULT NULL,
+  `extraValue` longtext CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `imageid` (`imageid`,`property`(110),`value`(111),`extraValue`(111)),
   KEY `copyright_imageid_index` (`imageid`),
   CONSTRAINT `ImageCopyright_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,11 +174,11 @@ DROP TABLE IF EXISTS `ImageHaarMatrix`;
 CREATE TABLE `ImageHaarMatrix` (
   `imageid` int(11) NOT NULL,
   `modificationDate` datetime DEFAULT NULL,
-  `uniqueHash` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `matrix` longblob,
+  `uniqueHash` longtext CHARACTER SET utf8 DEFAULT NULL,
+  `matrix` longblob DEFAULT NULL,
   PRIMARY KEY (`imageid`),
   CONSTRAINT `ImageHaarMatrix_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,11 +200,11 @@ DROP TABLE IF EXISTS `ImageHistory`;
 CREATE TABLE `ImageHistory` (
   `imageid` int(11) NOT NULL,
   `uuid` varchar(128) DEFAULT NULL,
-  `history` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `history` longtext CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`imageid`),
   KEY `uuid_index` (`uuid`),
   CONSTRAINT `ImageHistory_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,13 +231,13 @@ CREATE TABLE `ImageInformation` (
   `orientation` int(11) DEFAULT NULL,
   `width` int(11) DEFAULT NULL,
   `height` int(11) DEFAULT NULL,
-  `format` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `format` longtext CHARACTER SET utf8 DEFAULT NULL,
   `colorDepth` int(11) DEFAULT NULL,
   `colorModel` int(11) DEFAULT NULL,
   PRIMARY KEY (`imageid`),
   KEY `creationdate_index` (`creationDate`),
   CONSTRAINT `ImageInformation_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,7 +246,7 @@ CREATE TABLE `ImageInformation` (
 
 LOCK TABLES `ImageInformation` WRITE;
 /*!40000 ALTER TABLE `ImageInformation` DISABLE KEYS */;
-INSERT INTO `ImageInformation` VALUES (1,-1,'2017-11-05 11:17:46',NULL,0,100,100,'PNG',8,1),(2,-1,'2017-11-05 11:17:46',NULL,0,170,170,'JPG',8,5),(3,-1,'2017-11-05 11:17:46',NULL,0,484,500,'JPG',8,5);
+INSERT INTO `ImageInformation` VALUES (1,1,'2018-07-03 01:43:38',NULL,0,100,100,'PNG',8,1),(2,-1,'2018-07-03 01:43:38',NULL,0,170,170,'JPG',8,5),(3,1,'2018-07-03 01:43:38',NULL,0,484,500,'JPG',8,5);
 /*!40000 ALTER TABLE `ImageInformation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,9 +259,9 @@ DROP TABLE IF EXISTS `ImageMetadata`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ImageMetadata` (
   `imageid` int(11) NOT NULL,
-  `make` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `model` longtext CHARACTER SET utf8 COLLATE utf8_bin,
-  `lens` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `make` longtext CHARACTER SET utf8 DEFAULT NULL,
+  `model` longtext CHARACTER SET utf8 DEFAULT NULL,
+  `lens` longtext CHARACTER SET utf8 DEFAULT NULL,
   `aperture` double DEFAULT NULL,
   `focalLength` double DEFAULT NULL,
   `focalLength35` double DEFAULT NULL,
@@ -277,7 +277,7 @@ CREATE TABLE `ImageMetadata` (
   `subjectDistanceCategory` int(11) DEFAULT NULL,
   PRIMARY KEY (`imageid`),
   CONSTRAINT `ImageMetadata_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,19 +298,19 @@ DROP TABLE IF EXISTS `ImagePositions`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ImagePositions` (
   `imageid` int(11) NOT NULL,
-  `latitude` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `latitude` longtext CHARACTER SET utf8 DEFAULT NULL,
   `latitudeNumber` double DEFAULT NULL,
-  `longitude` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `longitude` longtext CHARACTER SET utf8 DEFAULT NULL,
   `longitudeNumber` double DEFAULT NULL,
   `altitude` double DEFAULT NULL,
   `orientation` double DEFAULT NULL,
   `tilt` double DEFAULT NULL,
   `roll` double DEFAULT NULL,
   `accuracy` double DEFAULT NULL,
-  `description` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `description` longtext CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`imageid`),
   CONSTRAINT `ImagePositions_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,11 +331,11 @@ DROP TABLE IF EXISTS `ImageProperties`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ImageProperties` (
   `imageid` int(11) NOT NULL,
-  `property` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `value` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `property` longtext CHARACTER SET utf8 NOT NULL,
+  `value` longtext CHARACTER SET utf8 NOT NULL,
   UNIQUE KEY `imageid` (`imageid`,`property`(255)),
   CONSTRAINT `ImageProperties_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -363,7 +363,7 @@ CREATE TABLE `ImageRelations` (
   KEY `object_relations_index` (`object`),
   CONSTRAINT `ImageRelations_ImagesO` FOREIGN KEY (`object`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ImageRelations_ImagesS` FOREIGN KEY (`subject`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,14 +385,14 @@ DROP TABLE IF EXISTS `ImageTagProperties`;
 CREATE TABLE `ImageTagProperties` (
   `imageid` int(11) DEFAULT NULL,
   `tagid` int(11) DEFAULT NULL,
-  `property` text CHARACTER SET utf8 COLLATE utf8_bin,
-  `value` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `property` text CHARACTER SET utf8 DEFAULT NULL,
+  `value` longtext CHARACTER SET utf8 DEFAULT NULL,
   KEY `imagetagproperties_index` (`imageid`,`tagid`),
   KEY `imagetagproperties_imageid_index` (`imageid`),
   KEY `imagetagproperties_tagid_index` (`tagid`),
   CONSTRAINT `ImageTagProperties_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ImageTagProperties_Tags` FOREIGN KEY (`tagid`) REFERENCES `Tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -419,7 +419,7 @@ CREATE TABLE `ImageTags` (
   KEY `tag_id_index` (`imageid`),
   CONSTRAINT `ImageTags_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ImageTags_Tags` FOREIGN KEY (`tagid`) REFERENCES `Tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -428,7 +428,7 @@ CREATE TABLE `ImageTags` (
 
 LOCK TABLES `ImageTags` WRITE;
 /*!40000 ALTER TABLE `ImageTags` DISABLE KEYS */;
-INSERT INTO `ImageTags` VALUES (1,7),(1,17),(1,25),(2,7),(2,17),(2,24),(3,7),(3,17),(3,21);
+INSERT INTO `ImageTags` VALUES (1,7),(1,17),(1,21),(1,23),(2,7),(2,17),(2,21),(2,24),(3,7),(3,17),(3,25);
 /*!40000 ALTER TABLE `ImageTags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -442,7 +442,7 @@ DROP TABLE IF EXISTS `Images`;
 CREATE TABLE `Images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `album` int(11) DEFAULT NULL,
-  `name` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `name` longtext CHARACTER SET utf8 NOT NULL,
   `status` int(11) NOT NULL,
   `category` int(11) NOT NULL,
   `modificationDate` datetime DEFAULT NULL,
@@ -454,7 +454,7 @@ CREATE TABLE `Images` (
   KEY `hash_index` (`uniqueHash`),
   KEY `image_name_index` (`name`(255)),
   CONSTRAINT `Images_Albums` FOREIGN KEY (`album`) REFERENCES `Albums` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,7 +463,7 @@ CREATE TABLE `Images` (
 
 LOCK TABLES `Images` WRITE;
 /*!40000 ALTER TABLE `Images` DISABLE KEYS */;
-INSERT INTO `Images` VALUES (1,1,'lifeboat-clipart-lifesaver-redwhiteblue-th.png',1,1,'2017-11-05 11:45:48',7041,'39cebcf4a2bfb1c0663dbec7f4a01a93'),(2,1,'lifesaver-clipart-gg65486572.jpg',1,1,'2017-11-05 11:45:48',7235,'03630a65c3afbb2bd370ec159dc088b3'),(3,1,'monkey-cartoon-142.jpg',1,1,'2017-11-05 11:45:48',37738,'be0abc9d34c0e83bee1fd61c118fc148');
+INSERT INTO `Images` VALUES (1,2,'lifeboat-clipart-lifesaver-redwhiteblue-th.png',1,1,'2018-07-03 01:43:38',7041,'39cebcf4a2bfb1c0663dbec7f4a01a93'),(2,2,'lifesaver-clipart-gg65486572.jpg',1,1,'2018-07-03 01:43:38',7235,'03630a65c3afbb2bd370ec159dc088b3'),(3,2,'monkey-cartoon-142.jpg',1,1,'2018-07-03 01:43:38',37738,'be0abc9d34c0e83bee1fd61c118fc148');
 /*!40000 ALTER TABLE `Images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -477,10 +477,10 @@ DROP TABLE IF EXISTS `Searches`;
 CREATE TABLE `Searches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` int(11) DEFAULT NULL,
-  `name` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `query` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `name` longtext CHARACTER SET utf8 NOT NULL,
+  `query` longtext CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -500,10 +500,10 @@ DROP TABLE IF EXISTS `Settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Settings` (
-  `keyword` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `value` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `keyword` longtext CHARACTER SET utf8 NOT NULL,
+  `value` longtext CHARACTER SET utf8 DEFAULT NULL,
   UNIQUE KEY `keyword` (`keyword`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -512,7 +512,7 @@ CREATE TABLE `Settings` (
 
 LOCK TABLES `Settings` WRITE;
 /*!40000 ALTER TABLE `Settings` DISABLE KEYS */;
-INSERT INTO `Settings` VALUES ('preAlpha010Update1','true'),('preAlpha010Update2','true'),('preAlpha010Update3','true'),('beta010Update1','true'),('beta010Update2','true'),('uniqueHashVersion','2'),('databaseImageFormats','jpg;jpeg;jpe;jp2;j2k;jpx;jpc;pgx;tif;tiff;png;gif;xpm;ppm;pnm;pgf;bmp;xcf;pcx;webp;bay;bmq;cr2;crw;cs1;dc2;dcr;dng;erf;fff;hdr;k25;kdc;mdc;mos;mrw;nef;orf;pef;pxn;raf;raw;rdc;sr2;srf;x3f;arw;3fr;cine;ia;kc2;mef;nrw;qtk;rw2;sti;rwl;srw;'),('databaseVideoFormats','mpeg;mpg;mpo;mpe;mts;vob;avi;divx;wmv;wmf;asf;mp4;3gp;mov;3g2;m4v;m2v;mkv;webm;mng'),('databaseAudioFormats','ogg;mp3;wma;wav'),('databaseIgnoreDirectoryFormats','@eaDir'),('FilterSettingsVersion','6'),('DcrawFilterSettingsVersion','4'),('DBVersion','8'),('DBVersionRequired','8'),('databaseUUID','{c9beeeaf-d314-4740-adf6-4c5ca6d8e4a9}'),('Locale','UTF-8'),('DeleteRemovedCompleteScanCount','3'),('Scanned','2017-11-05T11:45:53');
+INSERT INTO `Settings` VALUES ('preAlpha010Update1','true'),('preAlpha010Update2','true'),('preAlpha010Update3','true'),('beta010Update1','true'),('beta010Update2','true'),('uniqueHashVersion','2'),('databaseImageFormats','jpg;jpeg;jpe;jp2;j2k;jpx;jpc;pgx;tif;tiff;png;gif;xpm;ppm;pnm;pgf;bmp;xcf;pcx;webp;bay;bmq;cr2;crw;cs1;dc2;dcr;dng;erf;fff;hdr;k25;kdc;mdc;mos;mrw;nef;orf;pef;pxn;raf;raw;rdc;sr2;srf;x3f;arw;3fr;cine;ia;kc2;mef;nrw;qtk;rw2;sti;rwl;srw;'),('databaseVideoFormats','mpeg;mpg;mpo;mpe;mts;vob;avi;divx;wmv;wmf;asf;mp4;3gp;mov;3g2;m4v;m2v;mkv;webm;mng'),('databaseAudioFormats','ogg;mp3;wma;wav'),('databaseIgnoreDirectoryFormats','@eaDir'),('FilterSettingsVersion','6'),('DcrawFilterSettingsVersion','4'),('DBVersion','9'),('DBVersionRequired','9'),('databaseUUID','{a3827ec0-c993-4f71-8274-4be89cf96400}'),('Locale','UTF-8'),('DeleteRemovedCompleteScanCount','2'),('Scanned','2018-07-03T01:44:40');
 /*!40000 ALTER TABLE `Settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -525,11 +525,11 @@ DROP TABLE IF EXISTS `TagProperties`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `TagProperties` (
   `tagid` int(11) DEFAULT NULL,
-  `property` text CHARACTER SET utf8 COLLATE utf8_bin,
-  `value` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `property` text CHARACTER SET utf8 DEFAULT NULL,
+  `value` longtext CHARACTER SET utf8 DEFAULT NULL,
   KEY `tagproperties_index` (`tagid`),
   CONSTRAINT `TagProperties_Tags` FOREIGN KEY (`tagid`) REFERENCES `Tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -552,16 +552,16 @@ DROP TABLE IF EXISTS `Tags`;
 CREATE TABLE `Tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) DEFAULT NULL,
-  `name` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `name` longtext CHARACTER SET utf8 NOT NULL,
   `icon` int(11) DEFAULT NULL,
-  `iconkde` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `iconkde` longtext CHARACTER SET utf8 DEFAULT NULL,
   `lft` int(11) NOT NULL,
   `rgt` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pid` (`pid`,`name`(100)),
   KEY `Tags_Images` (`icon`),
   CONSTRAINT `Tags_Images` FOREIGN KEY (`icon`) REFERENCES `Images` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -570,7 +570,7 @@ CREATE TABLE `Tags` (
 
 LOCK TABLES `Tags` WRITE;
 /*!40000 ALTER TABLE `Tags` DISABLE KEYS */;
-INSERT INTO `Tags` VALUES (0,-1,'_Digikam_root_tag_',NULL,NULL,1,52),(1,0,'_Digikam_Internal_Tags_',NULL,NULL,12,51),(2,1,'Intermediate Version',NULL,NULL,49,50),(3,1,'Current Version',NULL,NULL,47,48),(4,1,'Version Always Visible',NULL,NULL,45,46),(5,1,'Need Resolving History',NULL,NULL,43,44),(6,1,'Need Tagging History Graph',NULL,NULL,41,42),(7,1,'Color Label None',NULL,NULL,39,40),(8,1,'Color Label Red',NULL,NULL,37,38),(9,1,'Color Label Orange',NULL,NULL,35,36),(10,1,'Color Label Yellow',NULL,NULL,33,34),(11,1,'Color Label Green',NULL,NULL,31,32),(12,1,'Color Label Blue',NULL,NULL,29,30),(13,1,'Color Label Magenta',NULL,NULL,27,28),(14,1,'Color Label Gray',NULL,NULL,25,26),(15,1,'Color Label Black',NULL,NULL,23,24),(16,1,'Color Label White',NULL,NULL,21,22),(17,1,'Pick Label None',NULL,NULL,19,20),(18,1,'Pick Label Rejected',NULL,NULL,17,18),(19,1,'Pick Label Pending',NULL,NULL,15,16),(20,1,'Pick Label Accepted',NULL,NULL,13,14),(21,0,'Monkey',NULL,NULL,10,11),(22,0,'People',NULL,NULL,8,9),(23,0,'Lifesaver',NULL,NULL,2,7),(24,23,'red',NULL,NULL,5,6),(25,23,'blue',NULL,NULL,3,4);
+INSERT INTO `Tags` VALUES (0,-1,'_Digikam_root_tag_',NULL,NULL,1,52),(1,0,'_Digikam_Internal_Tags_',NULL,NULL,12,51),(2,1,'Intermediate Version',NULL,NULL,49,50),(3,1,'Current Version',NULL,NULL,47,48),(4,1,'Version Always Visible',NULL,NULL,45,46),(5,1,'Need Resolving History',NULL,NULL,43,44),(6,1,'Need Tagging History Graph',NULL,NULL,41,42),(7,1,'Color Label None',NULL,NULL,39,40),(8,1,'Color Label Red',NULL,NULL,37,38),(9,1,'Color Label Orange',NULL,NULL,35,36),(10,1,'Color Label Yellow',NULL,NULL,33,34),(11,1,'Color Label Green',NULL,NULL,31,32),(12,1,'Color Label Blue',NULL,NULL,29,30),(13,1,'Color Label Magenta',NULL,NULL,27,28),(14,1,'Color Label Gray',NULL,NULL,25,26),(15,1,'Color Label Black',NULL,NULL,23,24),(16,1,'Color Label White',NULL,NULL,21,22),(17,1,'Pick Label None',NULL,NULL,19,20),(18,1,'Pick Label Rejected',NULL,NULL,17,18),(19,1,'Pick Label Pending',NULL,NULL,15,16),(20,1,'Pick Label Accepted',NULL,NULL,13,14),(21,0,'Lifesavers',NULL,NULL,6,11),(22,0,'People',NULL,NULL,4,5),(23,21,'blue',NULL,NULL,9,10),(24,21,'red',NULL,NULL,7,8),(25,0,'Monkey',NULL,NULL,2,3);
 /*!40000 ALTER TABLE `Tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -597,17 +597,17 @@ DROP TABLE IF EXISTS `VideoMetadata`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `VideoMetadata` (
   `imageid` int(11) NOT NULL,
-  `aspectRatio` text,
-  `audioBitRate` text,
-  `audioChannelType` text,
-  `audioCompressor` text,
-  `duration` text,
-  `frameRate` text,
+  `aspectRatio` text DEFAULT NULL,
+  `audioBitRate` text DEFAULT NULL,
+  `audioChannelType` text DEFAULT NULL,
+  `audioCompressor` text DEFAULT NULL,
+  `duration` text DEFAULT NULL,
+  `frameRate` text DEFAULT NULL,
   `exposureProgram` int(11) DEFAULT NULL,
-  `videoCodec` text,
+  `videoCodec` text DEFAULT NULL,
   PRIMARY KEY (`imageid`),
   CONSTRAINT `VideoMetadata_Images` FOREIGN KEY (`imageid`) REFERENCES `Images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -628,9 +628,9 @@ UNLOCK TABLES;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dkuser`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `TagsTree` AS select `Tags`.`id` AS `id`,`Tags`.`pid` AS `pid` from `Tags` */;
@@ -647,4 +647,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-05 11:47:23
+-- Dump completed on 2018-07-03  1:49:19
