@@ -1,7 +1,8 @@
 #!/bin/bash
 mysql -uroot -p$DBPASS < sql/dk_all_empty.sql
 mysql -udkuser -pdkpasswd digikam_devel_core < sql/dk_core_sample.sql 
-mysql -udkuser -pdkpasswd digikam_devel_core < sql/photosharing.sql
+mysql -udkuser -pdkpasswd digikam_devel_core < sql/create-photosharing.sql
+mysql -udkuser -pdkpasswd digikam_devel_core < sql/add-timestamp.sql
 
 PICS=/tmp/digikam-debug-pics
 [ -e $PICS ] && rm -r $PICS
